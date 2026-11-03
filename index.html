@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown to DOCX</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-24 -24 432 560'%3E%3Cpath d='M256 0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V128L256 0z' fill='%23ffffff' stroke='%23ffffff' stroke-width='36' stroke-linejoin='round'/%3E%3Cpath fill='%234f46e5' d='M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm57.1 120H305c7.7 0 13.4 7.1 11.7 14.7l-38 168c-1.2 5.5-6.1 9.3-11.7 9.3h-38c-5.5 0-10.3-3.8-11.6-9.1-25.8-103.5-20.8-81.2-25.6-110.5h-.5c-1.1 14.3-2.4 17.4-25.6 110.5-1.3 5.3-6.1 9.1-11.6 9.1H117c-5.6 0-10.5-3.9-11.7-9.4l-37.8-168c-1.7-7.5 4-14.6 11.7-14.6h24.5c5.7 0 10.7 4 11.8 9.7 15.6 78 20.1 109.5 21 122.2 1.6-10.2 7.3-32.7 29.4-122.7 1.3-5.4 6.1-9.1 11.7-9.1h29.5c5.6 0 10.4 3.7 11.7 9.1 22.1 90 27.8 112.5 29.4 122.7.9-12.7 5.4-44.2 21-122.2 1.1-5.7 6.1-9.7 11.8-9.7zM377 105L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9z'/%3E%3C/svg%3E">
+    
+    <!-- Local Compiled Tailwind Stylesheet -->
+    <link href="/static/css/tailwind.min.css" rel="stylesheet">
+
+    <!-- External Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js" integrity="sha384-948ahk4ZmxYVYOc+rxN1H2gM1EJ2Duhp7uHtZ4WSLkV4Vtx5MUqnV+l7u9B+jFv+" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js" integrity="sha384-cwS6YdhLI7XS60eoDiC+egV0qHp8zI+Cms46R0nbn8JrmoAzV9uFL60etMZhAnSu" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js" integrity="sha384-b4IZetZNE8bVncsQqlcH4ZZFC58BslGU2LVj47xUtIMOw72axMESbPe8spBylXnd" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/static/js/config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha384-Wuix6BuhrWbjDBs24bXrjf4ZQ5aFeFWBuKkFekO2t8xFU0iNaLQfp2K6/1Nxveei" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    
+    <!-- Custom Styles -->
+    <link href="/static/css/style.css" rel="stylesheet">
+
+    <!-- Pass Default Config to Global JS Scope (Moved to config.js) -->
+</head>
+<body class="bg-slate-50 min-h-screen text-slate-800 flex flex-col font-sans">
+
+	<header class="bg-indigo-600 text-white shadow-none py-4 px-6">
+		<div class="max-w-7xl mx-auto flex items-center gap-4">
+			<a href="https://github.com/CallMeShepard/markdown-to-docx/" target="_blank" rel="noopener noreferrer" class="text-white transition text-2xl github-3d-btn" title="GitHub">
+				<i class="fa-brands fa-github"></i>
+			</a>
+			<h1 class="text-xl font-bold tracking-wide flex items-center gap-2">
+				<i class="fa-solid fa-file-word text-2xl"></i>
+				Markdown to DOCX
+			</h1>
+		</div>
+	</header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 flex flex-col gap-6">
+
+        <!-- Full-Width Settings Toolbar across both panels -->
+        <div class="bg-white shadow-sm border border-slate-200 overflow-hidden">
+            <div class="bg-slate-100 px-4 py-3 border-b border-slate-200 flex flex-col gap-2.5">
+                <div class="flex flex-wrap justify-between items-center gap-3">
+                    <span class="font-semibold text-slate-700 text-xs sm:text-sm">Typography & Document Settings</span>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-x-4 gap-y-2 pt-1 border-t border-slate-200/70 text-xs font-medium text-slate-700">
+                    <label class="flex items-center gap-1.5 cursor-pointer select-none hover:text-indigo-600 transition">
+                        <input type="checkbox" id="smartQuotesToggle" class="w-4 h-4 text-indigo-600 border-slate-300 focus:ring-indigo-500" checked>
+                        <span>Quotes («...»)</span>
+                    </label>
+
+                    <div class="flex items-center gap-1.5">
+                        <label class="flex items-center gap-1.5 cursor-pointer select-none hover:text-indigo-600 transition">
+                            <input type="checkbox" id="italicToggle" class="w-4 h-4 text-indigo-600 border-slate-300 focus:ring-indigo-500" checked>
+                            <span>Italics:</span>
+                        </label>
+                        <input type="text" id="italicPattern" value="[A-Za-z]" placeholder="[A-Za-z]" 
+                               class="w-28 px-1.5 py-0.5 text-xs font-mono bg-white border border-slate-300 focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+
+                    <label class="flex items-center gap-1.5 cursor-pointer select-none hover:text-indigo-600 transition" title="Replace em dash (—) with en dash (–)">
+                        <input type="checkbox" id="replaceDashToggle" class="w-4 h-4 text-indigo-600 border-slate-300 focus:ring-indigo-500" checked>
+                        <span>Dash (— → –)</span>
+                    </label>
+
+                    <label class="flex items-center gap-1.5 cursor-pointer select-none hover:text-indigo-600 transition" title="Replace straight apostrophe (') with curly apostrophe (’)">
+                        <input type="checkbox" id="replaceApostropheToggle" class="w-4 h-4 text-indigo-600 border-slate-300 focus:ring-indigo-500" checked>
+                        <span>Apostrophe (' → ’)</span>
+                    </label>
+
+                    <label class="flex items-center gap-1.5 cursor-pointer select-none hover:text-indigo-600 transition" title="Make first word lowercase after colon">
+                        <input type="checkbox" id="lowercaseColonToggle" class="w-4 h-4 text-indigo-600 border-slate-300 focus:ring-indigo-500" checked>
+                        <span>Lower after ':'</span>
+                    </label>
+
+                    <label class="flex items-center gap-1.5 cursor-pointer select-none hover:text-indigo-600 transition" title="Automatically remove all emojis">
+                        <input type="checkbox" id="removeEmojisToggle" class="w-4 h-4 text-indigo-600 border-slate-300 focus:ring-indigo-500" checked>
+                        <span>No emojis</span>
+                    </label>
+
+                    <label class="flex items-center gap-1.5 cursor-pointer select-none hover:text-indigo-600 transition" title="Generate formulas directly in Times New Roman (ab Text mode in Word)">
+                        <input type="checkbox" id="mathTnrToggle" class="w-4 h-4 text-indigo-600 border-slate-300 focus:ring-indigo-500" checked>
+                        <span class="font-bold text-indigo-700">Equations in TNR</span>
+                    </label>
+
+                    <label class="flex items-center gap-1.5 cursor-pointer select-none hover:text-indigo-600 transition" title="Italicize mathematical function names such as min, max, ln, sin, and cos in Word equations">
+                        <input type="checkbox" id="italicizeMathFunctionsToggle" class="w-4 h-4 text-indigo-600 border-slate-300 focus:ring-indigo-500">
+                        <span>Italicize math functions</span>
+                    </label>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-200/70 text-xs">
+                    <div class="flex items-center gap-3">
+                        <label class="flex items-center gap-1.5 cursor-pointer select-none text-slate-800 font-semibold hover:text-indigo-600 transition">
+                            <input type="checkbox" id="highlightPreviewToggle" class="w-4 h-4 text-indigo-600 border-slate-300 focus:ring-indigo-500" checked>
+                            <span><i class="fa-solid fa-highlighter text-amber-500 mr-1"></i>Highlight changes in preview</span>
+                        </label>
+
+                        <label class="flex items-center gap-1.5 cursor-pointer select-none text-slate-800 font-semibold hover:text-indigo-600 transition" title="Export highlighter marks to Word">
+                            <input type="checkbox" id="highlightWordToggle" class="w-4 h-4 text-indigo-600 border-slate-300 focus:ring-indigo-500">
+                            <span>Highlight in Word (.docx)</span>
+                        </label>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2">
+                        <div id="highlightLegend" class="flex flex-wrap items-center gap-1.5 text-[10px] text-slate-500">
+                            <span class="inline-block px-1.5 py-0.5 bg-pink-100 text-pink-800 font-medium">«» quotes</span>
+                            <span class="inline-block px-1.5 py-0.5 bg-teal-100 text-teal-800 font-medium">– dash / ’ apos</span>
+                            <span class="inline-block px-1.5 py-0.5 bg-amber-100 text-amber-800 font-medium">: abc</span>
+                            <span class="inline-block px-1.5 py-0.5 bg-purple-100 text-purple-800 font-medium">custom</span>
+                            <span class="inline-block px-1.5 py-0.5 bg-slate-200 text-slate-700 font-medium">shift</span>
+                            <span class="inline-block px-1.5 py-0.5 bg-emerald-100 text-emerald-800 font-serif italic">italics</span>
+                            <span class="inline-block px-1.5 py-0.5 bg-cyan-100 text-cyan-800 font-medium">formula</span>
+                        </div>
+
+                        <div class="h-3 w-px bg-slate-300 mx-1"></div>
+
+                        <button type="button" id="toggleReplacementsBtn" class="text-slate-600 hover:text-indigo-600 text-xs font-semibold inline-flex items-center gap-1.5 transition cursor-pointer">
+                            <i class="fa-solid fa-wand-magic-sparkles text-indigo-500"></i> Auto-replacements
+                            <i id="drawerChevron" class="fa-solid fa-chevron-down text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="replacementsDrawer" class="hidden flex flex-col gap-2 pt-2 border-t border-slate-200">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="font-semibold text-slate-600">Custom replacement rules:</span>
+                        <div class="flex items-center gap-3">
+                            <button type="button" id="addCustomRuleBtn" class="text-indigo-600 hover:text-indigo-800 font-semibold flex items-center gap-1">
+                                <i class="fa-solid fa-plus"></i> Add rule
+                            </button>
+                            <button type="button" id="resetCustomRulesBtn" class="text-rose-600 hover:text-rose-800 font-semibold" title="Remove all custom replacement rules">
+                                Reset all
+                            </button>
+                        </div>
+                    </div>
+                    <div id="customRulesContainer" class="flex flex-col gap-1.5 max-h-36 overflow-y-auto pr-1"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Symmetrical 2-Column Workspace Wrapper -->
+        <div class="relative flex-grow flex flex-col">
+            <!-- Initialization Overlay -->
+            <div id="init-overlay" class="absolute inset-0 z-50 flex items-center justify-center pointer-events-auto panel-overlay">
+                <div class="bg-white shadow-2xl max-w-md w-full p-6 border border-slate-200 flex flex-col gap-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-slate-800 text-lg flex items-center gap-2">
+                            <i id="initStatusIcon" class="fa-solid fa-gear fa-spin text-indigo-600"></i>
+                            <span>Initializing Engine</span>
+                        </h3>
+                        <span class="text-xl font-extrabold text-indigo-600 font-mono">...</span>
+                    </div>
+                    <div class="w-full bg-slate-100 h-3 overflow-hidden p-0.5 border border-slate-200">
+                        <div class="bg-indigo-600 h-full w-full animate-pulse"></div>
+                    </div>
+                    <p id="initStatusMsg" class="text-xs text-slate-600 text-center font-medium mt-2">Loading Python WASM environment...</p>
+                </div>
+            </div>
+
+            <!-- Generation Progress Modal (Reusing unified overlay system) -->
+            <div id="progressModal" class="absolute inset-0 z-50 hidden flex items-center justify-center pointer-events-auto panel-overlay">
+                <div class="bg-white shadow-2xl max-w-md w-full p-6 border border-slate-200 flex flex-col gap-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-slate-800 text-lg flex items-center gap-2">
+                            <i id="statusIcon" class="fa-solid fa-gear fa-spin text-indigo-600"></i>
+                            <span id="modalTitle">Generating Word Document</span>
+                        </h3>
+                        <span id="pctLabel" class="text-xl font-extrabold text-indigo-600 font-mono">0%</span>
+                    </div>
+
+                    <div class="w-full bg-slate-100 h-3 overflow-hidden p-0.5 border border-slate-200">
+                        <div id="progressBar" class="bg-indigo-600 h-full transition-all duration-150 ease-out" style="width: 0%"></div>
+                    </div>
+
+                    <p id="statusMsg" class="text-xs text-slate-600 text-center font-medium mt-2">Initializing document builder...</p>
+
+                    <div id="modalActions" class="hidden flex justify-end gap-2 pt-2">
+                        <button type="button" id="closeProgressModalBtn" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold transition cursor-pointer">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Symmetrical 2-Column Grid (Exactly 2 children, no layout shifts) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch flex-grow">
+                <!-- Left Panel: Input Editor -->
+            <div class="flex flex-col bg-white shadow-sm border border-slate-200 overflow-hidden">
+                <div class="bg-slate-100 px-4 py-2.5 border-b border-slate-200 flex justify-between items-center h-10">
+                    <span class="font-semibold text-slate-700 text-xs sm:text-sm">Input Markdown Text</span>
+                    <div class="flex items-center gap-3">
+                        <button type="button" id="loadSampleBtn" class="text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50/80 px-2.5 py-1 text-xs font-semibold inline-flex items-center gap-1.5 transition cursor-pointer" title="Load sample document">
+                            <i class="fa-solid fa-file-lines text-[11px]"></i> Sample
+                        </button>
+                        <button type="button" id="clearTextBtn" class="text-rose-600 hover:text-rose-700 hover:bg-slate-100 px-2.5 py-1 text-xs font-semibold inline-flex items-center gap-1.5 transition cursor-pointer" title="Clear editor content">
+                            <i class="fa-solid fa-trash-can text-rose-500 text-[11px]"></i> Clear
+                        </button>
+                        <div class="h-3.5 w-px bg-slate-300"></div>
+                        <div class="flex items-center gap-1">
+							<span id="editorZoomLabel" class="w-9 text-right text-[11px] font-mono tabular-nums text-slate-400 select-none leading-none pt-0.5">100%</span>
+							<button type="button" id="resetEditorZoomBtn" title="Reset zoom (Ctrl + Scroll)" class="text-slate-400 hover:text-indigo-600 p-1 text-xs transition">
+								<i class="fa-solid fa-rotate-left"></i>
+							</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <form id="convertForm" action="#" method="POST" class="flex-grow flex flex-col p-4">
+                    <textarea 
+                        id="editor" 
+                        name="text" 
+                        maxlength="50000"
+                        class="flex-grow w-full h-[450px] lg:h-[550px] min-h-[380px] p-4 bg-slate-50 border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono text-sm leading-relaxed"
+                        placeholder="Enter text with equations..."></textarea>
+                </form>
+            </div>
+
+            <!-- Right Panel: Live Preview -->
+            <div class="flex flex-col bg-white shadow-sm border border-slate-200 overflow-hidden">
+                <div class="bg-slate-100 px-4 py-2.5 border-b border-slate-200 flex justify-between items-center h-10">
+                    <span class="font-semibold text-slate-700 text-xs sm:text-sm">Live Preview</span>
+                    <div class="flex items-center gap-3">
+                        <button type="submit" form="convertForm" id="submitBtn" class="text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50/80 px-2.5 py-1 text-xs font-bold inline-flex items-center gap-1.5 transition whitespace-nowrap cursor-pointer" title="Generate Word document">
+                            <i class="fa-solid fa-file-arrow-down text-[11px]"></i> Generate Word (.docx)
+                        </button>
+						<div class="h-3.5 w-px bg-slate-300"></div>
+						<div class="flex items-center gap-1">
+								<span id="previewZoomLabel" class="w-9 text-right text-[11px] font-mono tabular-nums text-slate-400 select-none leading-none pt-0.5">100%</span>
+								<button type="button" id="resetPreviewZoomBtn" title="Reset zoom (Ctrl + Scroll)" class="text-slate-400 hover:text-indigo-600 p-1 text-xs transition">
+									<i class="fa-solid fa-rotate-left"></i>
+								</button>
+						</div>
+                    </div>
+                </div>
+                
+                <div class="flex-grow flex flex-col p-4">
+                    <div id="preview-container" class="flex-grow w-full h-[450px] lg:h-[550px] min-h-[380px] p-4 bg-white border border-slate-300 overflow-y-auto prose max-w-none tex2jax_process relative">
+                        <div id="sync-highlight-overlay"></div>
+                        <div id="virtual-caret"></div>
+                        <div id="preview" class="text-justify leading-relaxed"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+    <!-- Custom Scripts -->
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

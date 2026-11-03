@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="390" viewBox="0 0 1200 390" role="img" aria-labelledby="title desc">
+  <title id="title">Markdown to DOCX — browser-based document converter</title>
+  <desc id="desc">A dark editorial hero showing Markdown converted into an editable Word document with a native mathematical equation.</desc>
+  <rect width="1200" height="390" fill="#101216"/>
+  <path d="M56 34H1144" stroke="#343943" stroke-width="1"/>
+  <text x="56" y="25" fill="#A6ABB5" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" letter-spacing="2">DOCUMENT TOOL / CLIENT-SIDE</text>
+
+  <g id="title-block">
+    <text x="56" y="112" fill="#F1F0EA" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="58" font-weight="700" letter-spacing="-2.2">Markdown to DOCX</text>
+    <rect x="57" y="139" width="48" height="4" fill="#7066E8"/>
+    <text x="56" y="190" fill="#D5D8DE" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="23" font-weight="400">Turn technical Markdown into editable</text>
+    <text x="56" y="222" fill="#D5D8DE" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="23" font-weight="400">Word documents — with native math.</text>
+    <text x="56" y="278" fill="#969DA8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="16">A focused document tool for formulas, tables,</text>
+    <text x="56" y="302" fill="#969DA8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="16">and academic typography.</text>
+    <text x="56" y="354" fill="#B8BDC6" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" letter-spacing="1">PYODIDE 0.25.0</text>
+    <circle cx="225" cy="349" r="2" fill="#7066E8"/>
+    <text x="241" y="354" fill="#B8BDC6" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" letter-spacing="1">PYTHON-DOCX</text>
+    <circle cx="394" cy="349" r="2" fill="#7066E8"/>
+    <text x="410" y="354" fill="#B8BDC6" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" letter-spacing="1">OMML / OPENXML</text>
+  </g>
+
+  <path d="M690 56V334" stroke="#343943" stroke-width="1"/>
+
+  <g id="document-specimen" transform="translate(746 58)">
+    <rect x="0" y="0" width="398" height="276" fill="#E9E8E1"/>
+    <rect x="0" y="0" width="398" height="32" fill="#D9D8D1"/>
+    <circle cx="18" cy="16" r="3.5" fill="#8D929B"/>
+    <circle cx="32" cy="16" r="3.5" fill="#8D929B"/>
+    <circle cx="46" cy="16" r="3.5" fill="#8D929B"/>
+    <text x="68" y="20" fill="#4F5560" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" letter-spacing="1">WORD DOCUMENT / OUTPUT</text>
+
+    <text x="30" y="66" fill="#626873" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" letter-spacing="1">SECTION 02  ·  MATHEMATICAL MODEL</text>
+    <text x="30" y="96" fill="#171A20" font-family="Georgia, 'Times New Roman', serif" font-size="21" font-weight="700">Heat transfer coefficient</text>
+    <path d="M30 111H366" stroke="#C6C7C2" stroke-width="1"/>
+    <text x="45" y="153" fill="#171A20" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-style="italic">Nu</text>
+    <text x="73" y="159" fill="#171A20" font-family="Georgia, 'Times New Roman', serif" font-size="12">f</text>
+    <text x="96" y="153" fill="#171A20" font-family="Georgia, 'Times New Roman', serif" font-size="22">=</text>
+    <text x="130" y="141" fill="#171A20" font-family="Georgia, 'Times New Roman', serif" font-size="18">α · d</text>
+    <text x="177" y="147" fill="#171A20" font-family="Georgia, 'Times New Roman', serif" font-size="11">e</text>
+    <path d="M126 154H202" stroke="#171A20" stroke-width="1.2"/>
+    <text x="157" y="176" fill="#171A20" font-family="Georgia, 'Times New Roman', serif" font-size="18">λ</text>
+    <text x="221" y="153" fill="#171A20" font-family="Georgia, 'Times New Roman', serif" font-size="20">+  Re</text>
+    <text x="279" y="160" fill="#171A20" font-family="Georgia, 'Times New Roman', serif" font-size="12">f</text>
+    <text x="30" y="217" fill="#666D77" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11">EDITABLE EQUATION</text>
+    <rect x="30" y="229" width="108" height="25" fill="#DCD9FA"/>
+    <text x="43" y="246" fill="#433A9B" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" letter-spacing=".5">NATIVE OMML</text>
+  </g>
+</svg>

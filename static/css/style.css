@@ -1,0 +1,120 @@
+mark[data-hl="quote"] { background-color: #fce7f3; color: #831843; border-bottom: 2px solid #f472b6; border-radius: 0; padding: 0 1px; }
+mark[data-hl="dash"] { background-color: #ccfbf1; color: #134e4a; border-bottom: 2px solid #5eead4; border-radius: 0; padding: 0 2px; }
+mark[data-hl="colon"] { background-color: #fef3c7; color: #78350f; border-bottom: 2px solid #fcd34d; border-radius: 0; padding: 0 1px; }
+mark[data-hl="custom"] { background-color: #f3e8ff; color: #581c87; border-bottom: 2px solid #d8b4fe; border-radius: 0; padding: 0 2px; }
+mark[data-hl="emoji"] { background-color: #e2e8f0; color: #1e293b; border-bottom: 2px solid #94a3b8; border-radius: 0; padding: 0 2px; }
+mark[data-hl="italic"] { background-color: #dcfce7; color: #14532d; border-bottom: 2px solid #86efac; border-radius: 0; padding: 0 1px; }
+mark[data-hl="math"] { background-color: #cffafe; color: #164e63; border: 1px solid #a5f3fc; border-radius: 0; padding: 0 3px; display: inline-block; }
+mark[data-hl="math"].block { display: block; padding: 6px; background-color: #ecfeff; border: 1px solid #a5f3fc; margin: 4px 0 12px 0; overflow-x: auto; overflow-y: hidden; max-width: 100%; }
+
+mark[data-hl].hl-overlap {
+    background-color: transparent !important;
+    background-image: var(--hl-line), var(--hl-stripes);
+    background-position: left bottom, 0 0;
+    background-size: 100% 2px, 12px 12px;
+    background-repeat: no-repeat, repeat;
+    border: 0;
+    border-radius: 2px;
+    color: inherit;
+    padding: 0 2px 2px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+#preview table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
+#preview th, #preview td { border: 1px solid #cbd5e1; padding: 0.5rem 0.75rem; text-align: left; }
+#preview th { background-color: #f1f5f9; font-weight: 600; color: #334155; }
+#preview tr:nth-child(even) { background-color: #f8fafc; }
+
+.github-3d-btn {
+    display: inline-block;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.github-3d-btn:hover {
+    transform: rotateY(360deg);
+}
+
+.panel-overlay {
+    background: radial-gradient(circle at center, rgba(248, 250, 252, 0.4) 15%, rgba(203, 213, 225, 0.85) 100%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: opacity 0.4s ease-out;
+    opacity: 1;
+}
+
+.panel-overlay.fade-out {
+    opacity: 0;
+}
+
+@keyframes page-fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+html {
+    background-color: #f8fafc;
+}
+
+body {
+    animation: page-fade-in 2.0s cubic-bezier(1, 1, 0.3, 1) forwards;
+}
+
+#sync-highlight-overlay {
+    position: absolute;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0;
+    transition: top 0.15s ease-out, left 0.15s ease-out, width 0.15s ease-out, height 0.15s ease-out, opacity 0.15s ease-out;
+}
+
+#sync-highlight-overlay.selection-mode {
+    background-color: rgba(79, 70, 229, 0.04);
+    border: none;
+    border-radius: 0;
+    background-image:
+        linear-gradient(90deg, #4f46e5 50%, transparent 50%),
+        linear-gradient(90deg, #4f46e5 50%, transparent 50%),
+        linear-gradient(0deg, #4f46e5 50%, transparent 50%),
+        linear-gradient(0deg, #4f46e5 50%, transparent 50%);
+    background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+    background-size: 12px 2px, 12px 2px, 2px 12px, 2px 12px;
+    background-position: 0 0, 100% 100%, 0 100%, 100% 0;
+    animation: marching-ants 0.8s infinite linear;
+}
+
+#sync-highlight-overlay.math-mode {
+    background-color: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    border-radius: 4px;
+    background-image: none;
+    animation: none;
+}
+
+@keyframes marching-ants {
+    100% { background-position: 12px 0, calc(100% - 12px) 100%, 0 calc(100% - 12px), 100% 12px; }
+}
+
+#virtual-caret {
+    position: absolute;
+    width: 2px;
+    background-color: #4f46e5;
+    pointer-events: none;
+    z-index: 20;
+    opacity: 0;
+    transition: top 0.1s ease-out, left 0.1s ease-out;
+    box-shadow: 0 0 4px rgba(79, 70, 229, 0.6);
+}
+
+#virtual-caret.blinking {
+    animation: blink-caret 1s step-end infinite;
+}
+
+@keyframes blink-caret {
+    50% { opacity: 0; }
+}
